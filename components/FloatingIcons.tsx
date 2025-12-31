@@ -19,23 +19,12 @@ const FloatingIcons: React.FC = () => {
         </div>
       </div>
 
-      {/* Make.com Icon - Standardized size */}
-      <div className="absolute top-[25%] right-[15%] floating" style={{ animationDelay: '2s' }}>
+      {/* Microsoft Power Automate Icons */}
+      <div className="absolute bottom-[35%] right-[10%] floating" style={{ animationDelay: '1s' }}>
         <div className={`${baseSize} ${containerClass}`}>
            <img 
-            src="https://img.icons8.com/?size=100&id=P7UIlhbpWzZm&format=png&color=000000" 
-            alt="Make.com" 
-            className="w-full h-full object-contain"
-           />
-        </div>
-      </div>
-
-      {/* Microsoft Power Automate Icon - Standardized size */}
-      <div className="absolute bottom-[20%] left-[18%] floating" style={{ animationDelay: '4s' }}>
-        <div className={`${baseSize} ${containerClass}`}>
-           <img 
-            src="https://img.icons8.com/?size=100&id=kTTt25v6Drpd&format=png&color=000000"
-            alt="Power Automate" 
+            src="https://img.icons8.com/?size=100&id=kTTt25v6Drpd&format=png&color=000000" 
+            alt="Slack" 
             className="w-full h-full object-contain" 
            />
         </div>
@@ -45,7 +34,7 @@ const FloatingIcons: React.FC = () => {
       <div className="absolute bottom-[20%] left-[18%] floating" style={{ animationDelay: '4s' }}>
         <div className={`${baseSize} ${containerClass}`}>
            <img 
-            src="https://img.icons8.com/?size=100&id=P7UIlhbpWzZm&format=png&color=000000" 
+            src="https://img.icons8.com/?size=100&id=qyRpAggnV0zH&format=png&color=000000" 
             alt="Gmail" 
             className="w-full h-full object-contain" 
            />
@@ -62,6 +51,7 @@ const FloatingIcons: React.FC = () => {
            />
         </div>
       </div>
+
     </div>
   );
 };
