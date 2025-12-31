@@ -1,10 +1,20 @@
 
-import React from 'react';
-import { Users, GraduationCap, ArrowRight, Star, Calendar, Check, Play, Quote, Mail } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Users, GraduationCap, ArrowRight, Star, Calendar, Check, Play, Quote, Mail, Sparkles, Brain, X } from 'lucide-react';
 import NormalDistribution from '../components/NormalDistribution';
+import AssessmentQuiz from '../components/AssessmentQuiz';
+import { useNavigate } from 'react-router';
 
 const Academy: React.FC = () => {
-  const [currentSlide, setCurrentSlide] = React.useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [showQuiz, setShowQuiz] = useState(false);
+  const navigate = useNavigate();
+
+  const getNextCohort = () => {
+    // Dynamic logic usually returns next month, but following specific request for "January '26"
+    return "January '26"; 
+  };
+
   const carouselImages = [
     {
       url: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200',
@@ -23,15 +33,15 @@ const Academy: React.FC = () => {
     }
   ];
 
-  React.useEffect(() => {
+  useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % carouselImages.length);
     }, 6000);
     return () => clearInterval(timer);
   }, []);
 
-  const scrollToEnroll = () => {
-    document.getElementById('enroll')?.scrollIntoView({ behavior: 'smooth' });
+  const handleApply = () => {
+    navigate('/checkout');
   };
 
   const companies = [
@@ -59,13 +69,13 @@ const Academy: React.FC = () => {
                 </p>
                 <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
                   <button 
-                    onClick={scrollToEnroll}
+                    onClick={handleApply}
                     className="bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black transition-all transform hover:scale-105 shadow-2xl shadow-blue-600/30"
                   >
-                    JOIN THE COHORT
+                    APPLY & SECURE SPOT
                   </button>
-                  <button className="bg-white/10 hover:bg-white/20 text-white backdrop-blur-md px-10 py-4 rounded-full font-bold transition-all border border-white/10 flex items-center gap-2 justify-center">
-                    <Play size={20} fill="currentColor" /> Watch Trailer
+                  <button onClick={() => setShowQuiz(true)} className="bg-white/10 hover:bg-white/20 text-white backdrop-blur-md px-10 py-4 rounded-full font-bold transition-all border border-white/10 flex items-center gap-2 justify-center">
+                    <Brain size={20} className="text-blue-400" /> Start Assessment
                   </button>
                 </div>
               </div>
@@ -83,6 +93,18 @@ const Academy: React.FC = () => {
         </div>
       </section>
 
+      {/* Assessment Quiz Section */}
+      {showQuiz && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4">
+          <div className="w-full max-w-2xl bg-slate-900 rounded-[3rem] border border-blue-500/20 overflow-hidden relative shadow-2xl">
+            <button onClick={() => setShowQuiz(false)} className="absolute top-8 right-8 text-slate-400 hover:text-white z-10 p-2">
+              <X size={24} />
+            </button>
+            <AssessmentQuiz onComplete={() => {}} />
+          </div>
+        </div>
+      )}
+
       {/* Looping Logos */}
       <section className="py-12 bg-slate-900 overflow-hidden border-y border-blue-900/10">
         <div className="max-w-7xl mx-auto px-4 mb-8">
@@ -97,24 +119,41 @@ const Academy: React.FC = () => {
         </div>
       </section>
 
+      {/* Quiz Callout */}
+      <section className="py-24 max-w-4xl mx-auto px-4 text-center">
+         <div className="bg-gradient-to-r from-blue-900/20 to-slate-900 p-12 rounded-[3rem] border border-blue-500/10 relative overflow-hidden">
+            <Sparkles className="absolute -top-10 -right-10 text-blue-500/10 w-40 h-40" />
+            <h2 className="text-4xl font-black text-white mb-6 italic">Unsure of your path?</h2>
+            <p className="text-slate-400 text-lg mb-8 max-w-xl mx-auto font-medium">
+               Take our 10-question logic assessment to find if you are naturally wired for <strong>Data Analytics</strong> or <strong>Agentic AI Engineering</strong>.
+            </p>
+            <button 
+              onClick={() => setShowQuiz(true)}
+              className="bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black text-lg transition-all shadow-xl shadow-blue-600/20"
+            >
+              Take the Quiz
+            </button>
+         </div>
+      </section>
+
       {/* Story: The Nexus Philosophy */}
       <section className="py-24 max-w-7xl mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
               <div>
-                  <h2 className="text-5xl font-black text-white mb-8">Not Just Another Course. <br /><span className="text-blue-500">A Career Rebirth.</span></h2>
-                  <p className="text-slate-400 text-xl leading-relaxed mb-8 italic border-l-4 border-blue-600 pl-6">
+                  <h2 className="text-5xl font-black text-white mb-8 italic">Not Just Another Course. <br /><span className="text-blue-500">A Career Rebirth.</span></h2>
+                  <p className="text-slate-400 text-xl leading-relaxed mb-8 italic border-l-4 border-blue-600 pl-6 font-medium">
                       "I spent 4 years in University learning Data Science. In 4 weeks at Nexus, I built an Agentic AI system that now handles the data entry for a $10M logistics firm. My starting salary jumped from $1k to $5k monthly."
                   </p>
                   <div className="flex items-center gap-4 mb-8">
                       <img src="https://i.pravatar.cc/100?u=ibrahim" className="w-16 h-16 rounded-full border-2 border-blue-500" />
                       <div>
-                          <div className="text-white font-bold text-lg">Ibrahim K.</div>
-                          <div className="text-slate-500">Nexus Alumnus, Lead Automation at Z-Tech</div>
+                          <div className="text-white font-black text-lg">Ibrahim K.</div>
+                          <div className="text-slate-500 font-bold uppercase text-xs tracking-widest">Nexus Alumnus, Lead Automation at Z-Tech</div>
                       </div>
                   </div>
               </div>
               <div className="bg-slate-900 p-12 rounded-[3rem] border border-blue-900/20 shadow-inner">
-                  <h3 className="text-2xl font-bold text-white mb-6">Our 4-Pillar Roadmap</h3>
+                  <h3 className="text-2xl font-black text-white mb-6 italic uppercase tracking-wider">Our 4-Pillar Roadmap</h3>
                   <div className="space-y-8">
                       <RoadmapItem step="01" title="AI Assessment" desc="Pinpoint your skill gaps with our custom LLM-powered diagnostic tool." />
                       <RoadmapItem step="02" title="Foundation Mastery" desc="Data cleaning, SQL, and advanced logic for automation." />
@@ -136,7 +175,7 @@ const Academy: React.FC = () => {
       <section className="py-24 max-w-7xl mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-5xl font-black text-white mb-4 italic">Meet Your Architects</h2>
-          <p className="text-slate-500 text-lg">We don't just teach; we consult for the world's biggest brands.</p>
+          <p className="text-slate-500 text-lg font-medium">We don't just teach; we consult for the world's biggest brands.</p>
         </div>
         <div className="grid md:grid-cols-3 gap-12">
           <TutorCard 
@@ -160,64 +199,29 @@ const Academy: React.FC = () => {
         </div>
       </section>
 
-      {/* Success Story / Alumni Spotlight */}
-      <section className="py-32 bg-slate-900/60 border-y border-blue-900/10">
-          <div className="max-w-7xl mx-auto px-4">
-              <div className="bg-slate-950 p-12 rounded-[4rem] border border-blue-500/20 grid lg:grid-cols-2 gap-16 items-center shadow-2xl relative">
-                  <div className="absolute -top-10 -right-10 opacity-10"><Quote size={200} className="text-blue-500" /></div>
-                  <div className="relative z-10">
-                      <span className="bg-blue-600 text-white text-xs font-black uppercase tracking-widest px-4 py-2 rounded-full mb-8 inline-block">Alumni Spotlight</span>
-                      <h3 className="text-4xl font-black text-white mb-6 leading-tight">From Office Assistant to $4,000/mo Automation Consultant.</h3>
-                      <p className="text-slate-400 text-lg mb-8 leading-relaxed">
-                          "I was stuck in a dead-end admin job. Nexus taught me how to use Make.com and AI to build solutions that businesses actually pay for."
-                      </p>
-                      <div className="grid grid-cols-2 gap-8 mb-8">
-                          <div>
-                              <div className="text-blue-500 text-3xl font-black">350%</div>
-                              <div className="text-slate-500 text-sm font-bold uppercase">Income Jump</div>
-                          </div>
-                          <div>
-                              <div className="text-blue-500 text-3xl font-black">2 Weeks</div>
-                              <div className="text-slate-500 text-sm font-bold uppercase">To Employment</div>
-                          </div>
-                      </div>
-                      <button onClick={scrollToEnroll} className="text-white font-black flex items-center gap-3 group">
-                         Apply for Next Cohort <ArrowRight className="group-hover:translate-x-2 transition-all text-blue-500" />
-                      </button>
-                  </div>
-                  <div className="relative">
-                      <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=800" className="rounded-[3rem] w-full h-[500px] object-cover shadow-2xl" alt="Success Story" />
-                      <div className="absolute bottom-8 left-8 bg-blue-600 p-6 rounded-3xl shadow-xl">
-                          <div className="text-white font-black text-xl">Samuel T.</div>
-                          <div className="text-blue-200 text-sm font-bold italic">Class of 2023</div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </section>
-
       {/* Pricing / Final Funnel */}
       <section className="py-24 max-w-7xl mx-auto px-4 text-center">
         <div className="bg-gradient-to-br from-blue-600 to-blue-900 p-16 md:p-32 rounded-[4rem] border border-blue-400 shadow-[0_40px_100px_-20px_rgba(37,99,235,0.5)] relative overflow-hidden">
           <h2 className="text-5xl md:text-7xl font-black text-white mb-8 italic">Ready to Lead?</h2>
-          <p className="text-xl text-blue-100 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Applications for the <span className="bg-white text-blue-600 px-3 py-1 rounded font-bold">September Cohort</span> are now open.
+          <p className="text-xl text-blue-100 mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
+            Applications for the <span className="bg-white text-blue-600 px-4 py-1.5 rounded-full font-black">{getNextCohort()} Cohort</span> are now open. Only 50 spots available for 8 weeks of intensive mastery.
           </p>
           
           <div className="flex flex-col items-center">
              <div className="bg-slate-950 p-10 rounded-[3rem] text-left w-full max-w-md shadow-2xl relative">
-                <div className="absolute -top-4 -right-4 bg-yellow-400 text-slate-950 font-black px-4 py-2 rounded-xl text-xs rotate-6">LIMITED SLOTS</div>
-                <div className="text-6xl font-black text-white my-4">$499</div>
-                <p className="text-blue-400 text-sm mb-8 font-bold italic">Includes lifetime access to AI Study CRM.</p>
+                <div className="absolute -top-4 -right-4 bg-yellow-400 text-slate-950 font-black px-4 py-2 rounded-xl text-xs rotate-6">SECURE SPOT</div>
+                <div className="text-6xl font-black text-white my-4">$50</div>
+                <p className="text-blue-400 text-sm mb-8 font-bold italic">Includes lifetime access to Nexus Study CRM.</p>
                 <button 
-                  onClick={scrollToEnroll}
+                  onClick={handleApply}
                   className="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-black text-xl transition-all mb-4 shadow-xl shadow-blue-600/20"
                 >
                    Apply & Secure Spot
                 </button>
                 <div className="flex flex-col gap-2">
-                    <div className="flex items-center gap-2 text-slate-400 text-sm"><Check size={16} className="text-blue-500" /> 12 Weeks Intensive Training</div>
-                    <div className="flex items-center gap-2 text-slate-400 text-sm"><Check size={16} className="text-blue-500" /> Job Placement Assistance</div>
+                    <div className="flex items-center gap-2 text-slate-400 text-sm font-bold"><Check size={16} className="text-blue-500" /> 8 Weeks Intensive Training</div>
+                    <div className="flex items-center gap-2 text-slate-400 text-sm font-bold"><Check size={16} className="text-blue-500" /> Job Placement Assistance</div>
+                    <div className="flex items-center gap-2 text-slate-400 text-sm font-bold"><Check size={16} className="text-blue-500" /> Installment Options Available</div>
                 </div>
              </div>
           </div>
@@ -229,12 +233,12 @@ const Academy: React.FC = () => {
         <div className="bg-slate-900 border border-blue-900/20 rounded-[3rem] p-10 lg:p-16 relative">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-4xl font-black text-white mb-6 italic">Enrollment & Enquiries</h2>
-              <p className="text-slate-400 text-lg mb-8 leading-relaxed">
-                Have questions about the curriculum, payment plans, or career outcomes? Our admissions team is ready to help.
+              <h2 className="text-4xl font-black text-white mb-6 italic">Enrollment Inquiry</h2>
+              <p className="text-slate-400 text-lg mb-8 leading-relaxed font-medium">
+                Not ready to pay yet? Use this form to make an inquiry. Our admissions team will reach out to discuss the curriculum, career outcomes, or payment plans.
               </p>
               <div className="space-y-4">
-                 <div className="flex items-center gap-4 text-white font-bold bg-slate-950/50 p-4 rounded-xl border border-blue-500/10">
+                 <div className="flex items-center gap-4 text-white font-black bg-slate-950/50 p-4 rounded-xl border border-blue-500/10 uppercase italic tracking-wider">
                     <Mail className="text-blue-500" /> academy@nexusai.com
                  </div>
               </div>
@@ -250,9 +254,9 @@ const Academy: React.FC = () => {
                     <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto shadow-2xl animate-pulse">
                       <Mail size={32} className="text-white" />
                     </div>
-                    <h3 className="text-2xl font-black text-white italic uppercase tracking-wider">Academy Typeform</h3>
-                    <p className="text-slate-400 font-medium text-sm">Admissions form loading in live environment...</p>
-                    <button className="bg-blue-600 text-white px-8 py-3 rounded-full font-bold text-sm">Direct Admissions Channel</button>
+                    <h3 className="text-2xl font-black text-white italic uppercase tracking-wider">Admissions Inquiry</h3>
+                    <p className="text-slate-400 font-bold text-sm">Please use this for questions only.</p>
+                    <button onClick={() => window.location.reload()} className="bg-blue-600 text-white px-8 py-3 rounded-full font-black text-sm uppercase">Open Inquiry Portal</button>
                   </div>
                </div>
             </div>
@@ -265,25 +269,25 @@ const Academy: React.FC = () => {
 
 const RoadmapItem = ({ step, title, desc }: { step: string, title: string, desc: string }) => (
     <div className="flex gap-6 group cursor-default">
-        <div className="text-4xl font-black text-slate-800 group-hover:text-blue-600 transition-colors">{step}</div>
+        <div className="text-4xl font-black text-slate-800 group-hover:text-blue-600 transition-colors uppercase italic">{step}</div>
         <div>
-            <h4 className="text-xl font-bold text-white mb-2">{title}</h4>
-            <p className="text-slate-500 text-sm leading-relaxed">{desc}</p>
+            <h4 className="text-xl font-black text-white mb-2 italic uppercase">{title}</h4>
+            <p className="text-slate-500 text-sm leading-relaxed font-medium">{desc}</p>
         </div>
     </div>
 );
 
 const TutorCard = ({ name, role, image, bio }: { name: string, role: string, image: string, bio: string }) => (
   <div className="group">
-    <div className="relative overflow-hidden rounded-[3rem] mb-8 aspect-square">
+    <div className="relative overflow-hidden rounded-[3rem] mb-8 aspect-square border border-blue-500/10">
       <img src={image} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100" alt={name} />
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
       <div className="absolute bottom-8 left-8 right-8">
-        <h4 className="text-3xl font-black text-white italic">{name}</h4>
-        <p className="text-blue-500 font-bold uppercase tracking-widest text-xs">{role}</p>
+        <h4 className="text-3xl font-black text-white italic uppercase tracking-tighter">{name}</h4>
+        <p className="text-blue-500 font-black uppercase tracking-[0.3em] text-[10px]">{role}</p>
       </div>
     </div>
-    <p className="text-slate-400 leading-relaxed px-4">{bio}</p>
+    <p className="text-slate-400 leading-relaxed px-4 font-medium">{bio}</p>
   </div>
 );
 

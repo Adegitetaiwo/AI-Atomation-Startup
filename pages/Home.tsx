@@ -280,7 +280,8 @@ const Home: React.FC = () => {
   );
 };
 
-const ImpactCard = ({ cs }: { cs: any }) => (
+// Fix: Explicitly typing ImpactCard as React.FC to allow passing the 'key' prop when rendered in lists
+const ImpactCard: React.FC<{ cs: any }> = ({ cs }) => (
   <div className="bg-slate-900/90 border border-blue-900/40 p-6 rounded-[2rem] backdrop-blur-md hover:border-blue-500/50 transition-all group flex flex-col h-full max-h-[460px]">
     {/* Header */}
     <div className="flex items-center justify-between mb-4">

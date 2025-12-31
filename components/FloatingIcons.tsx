@@ -7,11 +7,11 @@ const FloatingIcons: React.FC = () => {
 
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      {/* Zapier Icon - Requested VectorLogo link */}
+      {/* Zapier Icon - Updated with requested PNG logo */}
       <div className="absolute top-[12%] left-[10%] floating" style={{ animationDelay: '0s' }}>
         <div className={`${baseSize} ${containerClass}`}>
            <img 
-            src="https://www.vectorlogo.zone/logos/zapier/zapier-icon.svg" 
+            src="https://1000logos.net/wp-content/uploads/2022/09/Zapier-Logo-500x281.png" 
             alt="Zapier" 
             className="w-full h-full object-contain"
            />
