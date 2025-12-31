@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Users, GraduationCap, ArrowRight, Star, Calendar, Check, Play, Quote } from 'lucide-react';
+import { Users, GraduationCap, ArrowRight, Star, Calendar, Check, Play, Quote, Mail } from 'lucide-react';
 import NormalDistribution from '../components/NormalDistribution';
 
 const Academy: React.FC = () => {
@@ -30,6 +30,10 @@ const Academy: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
+  const scrollToEnroll = () => {
+    document.getElementById('enroll')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const companies = [
     "Google", "Microsoft", "Meta", "Amazon", "Tesla", "Netflix", "Uber", "Airbnb", "Standard Chartered", "Dangote", "MTN", "Safaricom"
   ];
@@ -54,7 +58,10 @@ const Academy: React.FC = () => {
                   {img.subtitle}
                 </p>
                 <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
-                  <button className="bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black transition-all transform hover:scale-105 shadow-2xl shadow-blue-600/30">
+                  <button 
+                    onClick={scrollToEnroll}
+                    className="bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-black transition-all transform hover:scale-105 shadow-2xl shadow-blue-600/30"
+                  >
                     JOIN THE COHORT
                   </button>
                   <button className="bg-white/10 hover:bg-white/20 text-white backdrop-blur-md px-10 py-4 rounded-full font-bold transition-all border border-white/10 flex items-center gap-2 justify-center">
@@ -162,7 +169,7 @@ const Academy: React.FC = () => {
                       <span className="bg-blue-600 text-white text-xs font-black uppercase tracking-widest px-4 py-2 rounded-full mb-8 inline-block">Alumni Spotlight</span>
                       <h3 className="text-4xl font-black text-white mb-6 leading-tight">From Office Assistant to $4,000/mo Automation Consultant.</h3>
                       <p className="text-slate-400 text-lg mb-8 leading-relaxed">
-                          "I was stuck in a dead-end admin job. I knew I wanted tech, but coding felt too slow. Nexus taught me how to use Make.com and AI to build solutions that businesses actually pay for. I landed my first consultant gig 2 weeks before graduation."
+                          "I was stuck in a dead-end admin job. Nexus taught me how to use Make.com and AI to build solutions that businesses actually pay for."
                       </p>
                       <div className="grid grid-cols-2 gap-8 mb-8">
                           <div>
@@ -174,7 +181,7 @@ const Academy: React.FC = () => {
                               <div className="text-slate-500 text-sm font-bold uppercase">To Employment</div>
                           </div>
                       </div>
-                      <button className="text-white font-black flex items-center gap-3 group">
+                      <button onClick={scrollToEnroll} className="text-white font-black flex items-center gap-3 group">
                          Apply for Next Cohort <ArrowRight className="group-hover:translate-x-2 transition-all text-blue-500" />
                       </button>
                   </div>
@@ -194,30 +201,61 @@ const Academy: React.FC = () => {
         <div className="bg-gradient-to-br from-blue-600 to-blue-900 p-16 md:p-32 rounded-[4rem] border border-blue-400 shadow-[0_40px_100px_-20px_rgba(37,99,235,0.5)] relative overflow-hidden">
           <h2 className="text-5xl md:text-7xl font-black text-white mb-8 italic">Ready to Lead?</h2>
           <p className="text-xl text-blue-100 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Applications for the <span className="bg-white text-blue-600 px-3 py-1 rounded font-bold">September Cohort</span> are now open. Only 50 spots available to ensure high-touch mentorship.
+            Applications for the <span className="bg-white text-blue-600 px-3 py-1 rounded font-bold">September Cohort</span> are now open.
           </p>
           
           <div className="flex flex-col items-center">
              <div className="bg-slate-950 p-10 rounded-[3rem] text-left w-full max-w-md shadow-2xl relative">
                 <div className="absolute -top-4 -right-4 bg-yellow-400 text-slate-950 font-black px-4 py-2 rounded-xl text-xs rotate-6">LIMITED SLOTS</div>
-                <div className="text-slate-500 line-through text-sm">Regular Admission: $1,499</div>
                 <div className="text-6xl font-black text-white my-4">$499</div>
                 <p className="text-blue-400 text-sm mb-8 font-bold italic">Includes lifetime access to AI Study CRM.</p>
-                <button className="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-black text-xl transition-all mb-4 shadow-xl shadow-blue-600/20">
+                <button 
+                  onClick={scrollToEnroll}
+                  className="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-black text-xl transition-all mb-4 shadow-xl shadow-blue-600/20"
+                >
                    Apply & Secure Spot
                 </button>
                 <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-2 text-slate-400 text-sm"><Check size={16} className="text-blue-500" /> 12 Weeks Intensive Training</div>
-                    <div className="flex items-center gap-2 text-slate-400 text-sm"><Check size={16} className="text-blue-500" /> 1:1 Strategy Sessions</div>
                     <div className="flex items-center gap-2 text-slate-400 text-sm"><Check size={16} className="text-blue-500" /> Job Placement Assistance</div>
                 </div>
              </div>
-             
-             <div className="mt-12">
-                <button className="text-white font-bold underline underline-offset-8 hover:text-blue-200 transition-all text-lg">
-                   Book a 1:1 Consultation with a Consultant first
-                </button>
-             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Inquiry Form (Academy Version) */}
+      <section id="enroll" className="max-w-7xl mx-auto px-4 py-16 mb-20 scroll-mt-24">
+        <div className="bg-slate-900 border border-blue-900/20 rounded-[3rem] p-10 lg:p-16 relative">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-4xl font-black text-white mb-6 italic">Enrollment & Enquiries</h2>
+              <p className="text-slate-400 text-lg mb-8 leading-relaxed">
+                Have questions about the curriculum, payment plans, or career outcomes? Our admissions team is ready to help.
+              </p>
+              <div className="space-y-4">
+                 <div className="flex items-center gap-4 text-white font-bold bg-slate-950/50 p-4 rounded-xl border border-blue-500/10">
+                    <Mail className="text-blue-500" /> academy@nexusai.com
+                 </div>
+              </div>
+            </div>
+            <div className="bg-black/40 rounded-[2.5rem] h-[550px] border border-blue-500/10 relative overflow-hidden group">
+               <iframe 
+                src="https://form.typeform.com/to/placeholder" 
+                title="Nexus Academy Inquiry Form"
+                className="w-full h-full rounded-[2.5rem] border-none grayscale opacity-20"
+               ></iframe>
+               <div className="absolute inset-0 flex items-center justify-center bg-slate-900/95 z-10 p-10 text-center">
+                  <div className="space-y-6">
+                    <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto shadow-2xl animate-pulse">
+                      <Mail size={32} className="text-white" />
+                    </div>
+                    <h3 className="text-2xl font-black text-white italic uppercase tracking-wider">Academy Typeform</h3>
+                    <p className="text-slate-400 font-medium text-sm">Admissions form loading in live environment...</p>
+                    <button className="bg-blue-600 text-white px-8 py-3 rounded-full font-bold text-sm">Direct Admissions Channel</button>
+                  </div>
+               </div>
+            </div>
           </div>
         </div>
       </section>

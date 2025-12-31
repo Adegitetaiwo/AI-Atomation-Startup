@@ -1,10 +1,19 @@
 
-import React from 'react';
-// Use unified 'react-router' package to resolve missing exported member errors
+import React, { useEffect } from 'react';
 import { HashRouter, Routes, Route, Link, useLocation } from 'react-router';
 import Home from './pages/Home';
 import Academy from './pages/Academy';
+import CursorEffect from './components/CursorEffect';
 import { Menu, X, Rocket, GraduationCap, Layout, Youtube } from 'lucide-react';
+
+// ScrollToTop component to reset scroll position on navigation
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -14,6 +23,18 @@ const Navbar = () => {
     { name: 'Solutions', path: '/', icon: <Rocket size={18} /> },
     { name: 'Academy', path: '/academy', icon: <GraduationCap size={18} /> },
   ];
+
+  const handleConsultClick = () => {
+    const element = document.getElementById('consult');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.location.href = '/#/';
+      setTimeout(() => {
+        document.getElementById('consult')?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-blue-900/30">
@@ -30,7 +51,7 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
+            <div className="ml-10 flex items-center space-x-8">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
@@ -52,7 +73,10 @@ const Navbar = () => {
                 <Youtube size={18} />
                 <span>Tutorials</span>
               </a>
-              <button className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-full text-sm font-bold transition-all shadow-lg shadow-blue-600/30">
+              <button 
+                onClick={handleConsultClick}
+                className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-full text-sm font-bold transition-all shadow-lg shadow-blue-600/30"
+              >
                 Get Started
               </button>
             </div>
@@ -105,7 +129,9 @@ const Footer = () => (
 export default function App() {
   return (
     <HashRouter>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col bg-slate-950">
+        <ScrollToTop />
+        <CursorEffect />
         <Navbar />
         <main className="flex-grow pt-20">
           <Routes>
