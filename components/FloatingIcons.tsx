@@ -42,7 +42,7 @@ const FloatingIcons: React.FC = () => {
       </div>
 
       {/* Slack Icon - Moved to a unique position to prevent overlapping with other icons */}
-      <div className="absolute bottom-[35%] right-[10%] floating" style={{ animationDelay: '1s' }}>
+      <div className="absolute bottom-[15%] right-[30%] floating" style={{ animationDelay: '1s' }}>
         <div className={`${baseSize} ${containerClass}`}>
            <img 
             src="https://www.vectorlogo.zone/logos/slack/slack-icon.svg" 
