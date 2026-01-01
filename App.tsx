@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { HashRouter, Routes, Route, Link, useLocation } from 'react-router';
+import { HashRouter, Routes, Route, Link, useLocation, Navigate } from 'react-router';
 import Home from './pages/Home';
 import Academy from './pages/Academy';
 import Checkout from './pages/Checkout';
@@ -29,7 +29,8 @@ const Navbar = ({ user, onLogout, onOpenAuth }: { user: any, onLogout: () => voi
     { name: 'Academy', path: '/academy', icon: <GraduationCap size={18} /> },
   ];
 
-  if (user) {
+  // Only show CRM to users who have paid
+  if (user && user.paid) {
     navLinks.push({ name: 'Study CRM', path: '/crm', icon: <Layout size={18} /> });
   }
 
@@ -91,12 +92,13 @@ const Navbar = ({ user, onLogout, onOpenAuth }: { user: any, onLogout: () => voi
                       {user.email[0].toUpperCase()}
                     </div>
                     <span className="text-xs font-bold text-slate-300">{user.email.split('@')[0]}</span>
+                    {user.paid && <span className="bg-green-500/20 text-green-400 text-[8px] px-1.5 py-0.5 rounded font-black uppercase">Paid</span>}
                   </div>
                   <button onClick={onLogout} className="text-slate-400 hover:text-red-400 transition-colors">
                     <LogOut size={18} />
                   </button>
                 </div>
-              ) : isAcademyPage ? (
+              ) : (
                 <button 
                   onClick={onOpenAuth}
                   className="flex items-center space-x-2 text-slate-300 hover:text-white font-bold text-sm"
@@ -104,7 +106,7 @@ const Navbar = ({ user, onLogout, onOpenAuth }: { user: any, onLogout: () => voi
                   <User size={18} />
                   <span>Sign In</span>
                 </button>
-              ) : null}
+              )}
 
               <button 
                 onClick={handleConsultClick}
@@ -144,7 +146,7 @@ const Navbar = ({ user, onLogout, onOpenAuth }: { user: any, onLogout: () => voi
             <Youtube size={18} />
             <span>Tutorials</span>
           </a>
-          {!user && isAcademyPage && (
+          {!user && (
              <button 
               onClick={() => { setIsOpen(false); onOpenAuth(); }}
               className="w-full text-left flex items-center space-x-2 block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-blue-900/20"
@@ -192,6 +194,11 @@ export default function App() {
     setIsAuthOpen(false);
   };
 
+  const handleUpdateUser = (updatedUser: any) => {
+    setUser(updatedUser);
+    localStorage.setItem('nexus_user', JSON.stringify(updatedUser));
+  };
+
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem('nexus_user');
@@ -207,9 +214,15 @@ export default function App() {
         <main className="flex-grow pt-20">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/academy" element={<Academy />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/crm" element={<StudyCRM user={user} />} />
+            <Route path="/academy" element={<Academy user={user} onOpenAuth={() => setIsAuthOpen(true)} />} />
+            <Route 
+                path="/checkout" 
+                element={user ? <Checkout user={user} onUpdateUser={handleUpdateUser} /> : <Navigate to="/academy" />} 
+            />
+            <Route 
+                path="/crm" 
+                element={user && user.paid ? <StudyCRM user={user} /> : <Navigate to="/academy" />} 
+            />
           </Routes>
         </main>
         <Footer />

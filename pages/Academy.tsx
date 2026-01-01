@@ -5,13 +5,17 @@ import NormalDistribution from '../components/NormalDistribution';
 import AssessmentQuiz from '../components/AssessmentQuiz';
 import { useNavigate } from 'react-router';
 
-const Academy: React.FC = () => {
+interface AcademyProps {
+  user: any;
+  onOpenAuth: () => void;
+}
+
+const Academy: React.FC<AcademyProps> = ({ user, onOpenAuth }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
   const navigate = useNavigate();
 
   const getNextCohort = () => {
-    // Dynamic logic usually returns next month, but following specific request for "January '26"
     return "January '26"; 
   };
 
@@ -41,7 +45,11 @@ const Academy: React.FC = () => {
   }, []);
 
   const handleApply = () => {
-    navigate('/checkout');
+    if (!user) {
+      onOpenAuth();
+    } else {
+      navigate('/checkout');
+    }
   };
 
   const companies = [
@@ -100,7 +108,7 @@ const Academy: React.FC = () => {
             <button onClick={() => setShowQuiz(false)} className="absolute top-8 right-8 text-slate-400 hover:text-white z-10 p-2">
               <X size={24} />
             </button>
-            <AssessmentQuiz onComplete={() => {}} />
+            <AssessmentQuiz onComplete={() => {}} onStartCheckout={handleApply} />
           </div>
         </div>
       )}

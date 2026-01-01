@@ -1,19 +1,33 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { CreditCard, CheckCircle2, ShieldCheck, ArrowLeft, Loader2 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
 
-const Checkout: React.FC = () => {
+interface CheckoutProps {
+  user: any;
+  onUpdateUser: (user: any) => void;
+}
+
+const Checkout: React.FC<CheckoutProps> = ({ user, onUpdateUser }) => {
   const [paymentPlan, setPaymentPlan] = useState<'full' | 'part'>('full');
   const [isProcessing, setIsProcessing] = useState(false);
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
 
+  // Generate a mock payment ID
+  const paymentId = useMemo(() => `PAY-${Math.random().toString(36).substr(2, 9).toUpperCase()}`, [paymentPlan]);
+
   const handlePayment = () => {
     setIsProcessing(true);
+    
     // Simulate Payaza gateway interaction
     setTimeout(() => {
       setIsProcessing(false);
+      
+      // Update global user state with paid status
+      onUpdateUser({ ...user, paid: true });
+      
+      window.alert("Payment Successful! Reference: " + paymentId + "\n\nYour account has been verified for Study CRM access.");
       setStep(2);
     }, 2500);
   };
@@ -22,6 +36,7 @@ const Checkout: React.FC = () => {
     navigate('/crm');
   };
 
+  // View: Success step
   if (step === 2) {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
@@ -30,17 +45,21 @@ const Checkout: React.FC = () => {
               <CheckCircle2 size={48} className="text-white" />
            </div>
            <div>
-              <h2 className="text-4xl font-black text-white mb-2 italic uppercase">Payment Confirmed!</h2>
-              <p className="text-slate-400 font-medium">Welcome to the Jan '26 Nexus Elite Cohort.</p>
+              <h2 className="text-4xl font-black text-white mb-2 italic uppercase">Enrollment Complete!</h2>
+              <p className="text-slate-400 font-medium">Welcome to the Jan '26 Nexus Elite Cohort, {user?.name || 'Student'}.</p>
            </div>
            <div className="bg-slate-900 border border-blue-500/20 p-6 rounded-3xl text-left">
               <div className="flex justify-between items-center mb-4">
                 <span className="text-slate-500 text-sm font-bold uppercase">Enrollment ID</span>
                 <span className="text-white font-black">NX-2026-9482</span>
               </div>
+              <div className="flex justify-between items-center mb-4">
+                <span className="text-slate-500 text-sm font-bold uppercase">Payment Ref</span>
+                <span className="text-blue-400 font-bold font-mono text-xs">{paymentId}</span>
+              </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-500 text-sm font-bold uppercase">Status</span>
-                <span className="text-blue-500 font-black">ACTIVE</span>
+                <span className="text-green-500 font-black">VERIFIED ACCESS</span>
               </div>
            </div>
            <button 
@@ -57,9 +76,16 @@ const Checkout: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-950 py-12 px-4">
       <div className="max-w-6xl mx-auto">
-        <Link to="/academy" className="inline-flex items-center gap-2 text-slate-400 hover:text-white font-bold mb-12 transition-colors">
-          <ArrowLeft size={18} /> Back to Academy
-        </Link>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+          <Link to="/academy" className="inline-flex items-center gap-2 text-slate-400 hover:text-white font-bold transition-colors">
+            <ArrowLeft size={18} /> Back to Academy
+          </Link>
+          <div className="flex items-center gap-3 bg-slate-900 px-4 py-2 rounded-2xl border border-blue-500/10">
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <span className="text-slate-400 text-xs font-bold uppercase tracking-wider">Authenticated as </span>
+            <span className="text-white font-black text-xs uppercase italic tracking-tighter">{user.email}</span>
+          </div>
+        </div>
 
         <div className="grid lg:grid-cols-5 gap-12">
           <div className="lg:col-span-3 space-y-8">
@@ -101,8 +127,8 @@ const Checkout: React.FC = () => {
                     <div className="flex items-center gap-3">
                        <img src="https://payaza.com/wp-content/uploads/2021/11/Payaza_logo-01.png" className="h-6 opacity-80" alt="Payaza" />
                     </div>
-                    <div className="flex gap-2">
-                       <CreditCard className="text-slate-500" />
+                    <div className="flex gap-2 text-slate-500">
+                       <CreditCard />
                     </div>
                   </div>
                   

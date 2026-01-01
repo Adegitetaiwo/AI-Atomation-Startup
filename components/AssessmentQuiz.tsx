@@ -51,7 +51,7 @@ const questions: Question[] = [
   }
 ];
 
-const AssessmentQuiz: React.FC<{ onComplete: (result: string) => void }> = ({ onComplete }) => {
+const AssessmentQuiz: React.FC<{ onComplete: (result: string) => void; onStartCheckout: () => void }> = ({ onComplete, onStartCheckout }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [scores, setScores] = useState({ analytics: 0, automation: 0 });
   const [showResult, setShowResult] = useState(false);
@@ -100,7 +100,7 @@ const AssessmentQuiz: React.FC<{ onComplete: (result: string) => void }> = ({ on
         </p>
 
         <button 
-          onClick={() => window.location.href = '#/checkout'}
+          onClick={onStartCheckout}
           className="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-black text-xl transition-all shadow-2xl shadow-blue-600/30 flex items-center justify-center gap-3"
         >
           Secure Your Spot <ArrowRight size={20} />
