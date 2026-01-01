@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Users, GraduationCap, ArrowRight, Star, Calendar, Check, Play, Quote, Mail, Sparkles, Brain, X } from 'lucide-react';
+import { Users, GraduationCap, ArrowRight, Star, Calendar, Check, Play, Quote, Mail, Sparkles, Brain, X, Linkedin, Twitter, Globe } from 'lucide-react';
 import NormalDistribution from '../components/NormalDistribution';
 import AssessmentQuiz from '../components/AssessmentQuiz';
 import { useNavigate } from 'react-router';
@@ -34,6 +34,48 @@ const Academy: React.FC<AcademyProps> = ({ user, onOpenAuth }) => {
       url: 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200',
       title: 'ELITE MENTORSHIP',
       subtitle: 'Join a cohort led by Africa\'s top automation consultants.'
+    }
+  ];
+
+  const testimonials = [
+    {
+      name: "Sarah M.",
+      role: "Senior Data Analyst at Standard Chartered",
+      content: "Csuit changed my perspective on automation. I don't just build dashboards anymore; I build agents that act on the data.",
+      avatar: "https://i.pravatar.cc/150?u=sarah"
+    },
+    {
+      name: "David O.",
+      role: "Workflow Engineer at MTN",
+      content: "The Make.com masterclass alone paid for the course. I've automated 60% of my team's reporting since graduating.",
+      avatar: "https://i.pravatar.cc/150?u=david"
+    },
+    {
+      name: "Chidi E.",
+      role: "Operations Lead at Dangote Group",
+      content: "The level of logic routing taught here is enterprise-grade. It's the only AI course I've seen that actually focuses on production systems.",
+      avatar: "https://i.pravatar.cc/150?u=chidi"
+    }
+  ];
+
+  const teamMembers = [
+    {
+      name: "Dr. Elena Vance",
+      role: "Head of Agentic Systems",
+      bio: "Former lead at OpenAI's logistics research team. Elena specializes in multi-agent orchestration.",
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400"
+    },
+    {
+      name: "Marcus Thorne",
+      role: "Chief Automation Architect",
+      bio: "An n8n and Make.com veteran who has deployed over 500+ enterprise workflows globally.",
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400"
+    },
+    {
+      name: "Sofia Diallo",
+      role: "Director of Data Analytics",
+      bio: "Specialist in predictive modeling and SQL architecture. Sofia bridges the gap between raw data and AI agents.",
+      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400"
     }
   ];
 
@@ -130,7 +172,7 @@ const Academy: React.FC<AcademyProps> = ({ user, onOpenAuth }) => {
                       <img src="https://i.pravatar.cc/100?u=ibrahim" className="w-16 h-16 rounded-full border-2 border-blue-600" />
                       <div>
                           <div className="text-slate-900 dark:text-white font-black text-lg">Ibrahim K.</div>
-                          <div className="text-slate-500 font-bold uppercase text-xs tracking-widest">Csuit Alumnus, Lead Automation</div>
+                          <div className="text-slate-500 font-bold uppercase text-xs tracking-widest">Csuit Alumnus, Lead Automation Consultant</div>
                       </div>
                   </div>
               </div>
@@ -144,6 +186,76 @@ const Academy: React.FC<AcademyProps> = ({ user, onOpenAuth }) => {
                   </div>
               </div>
           </div>
+      </section>
+
+      {/* Meet the Architects (Team Section) */}
+      <section className="py-24 bg-slate-50 dark:bg-slate-900/30">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white uppercase tracking-tighter mb-4 font-display">Meet the Architects</h2>
+            <p className="text-slate-500 dark:text-slate-400 text-lg max-w-2xl mx-auto font-medium">
+              Join a cohort led by world-class engineers who don't just teach—they deploy.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-12">
+            {teamMembers.map((member, i) => (
+              <div key={i} className="group bg-white dark:bg-slate-950 p-6 rounded-[2.5rem] border border-slate-200 dark:border-blue-500/10 hover:border-blue-600 transition-all shadow-xl">
+                <div className="relative mb-6 overflow-hidden rounded-[2rem] aspect-[4/5]">
+                  <img src={member.image} alt={member.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 grayscale group-hover:grayscale-0" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+                    <div className="flex gap-4">
+                      <Linkedin className="text-white hover:text-blue-400 cursor-pointer" size={20} />
+                      <Twitter className="text-white hover:text-blue-400 cursor-pointer" size={20} />
+                      <Globe className="text-white hover:text-blue-400 cursor-pointer" size={20} />
+                    </div>
+                  </div>
+                </div>
+                <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight font-display">{member.name}</h3>
+                <p className="text-blue-600 font-bold text-xs uppercase tracking-widest mb-4">{member.role}</p>
+                <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-medium">
+                  {member.bio}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Alumni Hall of Fame (Testimonials Section) */}
+      <section className="py-24 max-w-7xl mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white uppercase tracking-tighter mb-4 font-display">Alumni Hall of Fame</h2>
+          <p className="text-slate-500 dark:text-slate-400 text-lg max-w-2xl mx-auto font-medium">
+            Hear from the graduates who are already dominating the AI adoption curve.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {testimonials.map((t, i) => (
+            <div key={i} className="bg-slate-50 dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-blue-500/5 relative">
+              <Quote className="absolute top-6 right-8 text-blue-600/10" size={60} />
+              <div className="flex gap-1 mb-6">
+                {[...Array(5)].map((_, i) => <Star key={i} size={14} className="fill-blue-600 text-blue-600" />)}
+              </div>
+              <p className="text-slate-600 dark:text-slate-400 text-lg mb-8 leading-relaxed font-medium italic">
+                "{t.content}"
+              </p>
+              <div className="flex items-center gap-4">
+                <img src={t.avatar} className="w-12 h-12 rounded-full border-2 border-blue-600" alt={t.name} />
+                <div>
+                  <div className="text-slate-900 dark:text-white font-black text-sm">{t.name}</div>
+                  <div className="text-slate-500 font-bold uppercase text-[10px] tracking-widest">{t.role}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Normal Distribution Section */}
+      <section className="py-24">
+        <NormalDistribution />
       </section>
 
       {/* Pricing Funnel */}
