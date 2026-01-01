@@ -1,18 +1,32 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NexusAI | Automate. Educate. Dominate.</title>
+  <title>CsuitAI | Automate. Educate. Dominate.</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
   <style>
     body {
-      font-family: 'Inter', sans-serif;
-      background-color: #000000;
-      color: #f8fafc;
-      overflow-x: hidden;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    h1, h2, h3, h4, .font-display {
+      font-family: 'Outfit', sans-serif;
     }
     @keyframes scroll {
       0% { transform: translateX(0); }
@@ -41,9 +55,6 @@
       0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
       100% { transform: translate(-50%, -150%) scale(1.2); opacity: 0; }
     }
-    .case-study-transition {
-      transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-    }
   </style>
 <script type="importmap">
 {
@@ -59,7 +70,7 @@
 }
 </script>
 </head>
-<body>
+<body class="bg-white dark:bg-black text-slate-900 dark:text-slate-100 overflow-x-hidden">
   <div id="root"></div>
 </body>
 </html>
