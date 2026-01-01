@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Users, GraduationCap, ArrowRight, Star, Calendar, Check, Play, Quote, Mail, Sparkles, Brain, X, Linkedin, Twitter, Globe } from 'lucide-react';
+import { Users, GraduationCap, ArrowRight, Star, Calendar, Check, Play, Quote, Mail, Sparkles, Brain, X, Linkedin, Twitter, Globe, TrendingUp } from 'lucide-react';
 import NormalDistribution from '../components/NormalDistribution';
 import AssessmentQuiz from '../components/AssessmentQuiz';
 import { useNavigate } from 'react-router';
@@ -36,6 +36,14 @@ const Academy: React.FC<AcademyProps> = ({ user, onOpenAuth }) => {
       subtitle: 'Join a cohort led by Africa\'s top automation consultants.'
     }
   ];
+
+  const highlightedAlumnus = {
+    name: "Samuel T.",
+    role: "Automation Lead, FinTech Unicorn",
+    story: "Before Csuit, I was stuck as a manual QA tester with no clear growth path. Within 3 months of finishing the Agentic AI track, I designed a self-healing regression suite for a major FinTech. My salary tripled, and I recently relocated to London to lead their automation division. Csuit didn't just teach me tools; it taught me how to architect solutions that businesses actually value.",
+    achievement: "300% Salary Increase",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400"
+  };
 
   const testimonials = [
     {
@@ -188,12 +196,82 @@ const Academy: React.FC<AcademyProps> = ({ user, onOpenAuth }) => {
           </div>
       </section>
 
+      {/* Normal Distribution Section - Moved here as requested */}
+      <section className="py-12 md:py-24">
+        <NormalDistribution />
+      </section>
+
+      {/* Highlighted Success Story */}
+      <section className="py-24 bg-blue-600 text-white overflow-hidden relative">
+        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+           <TrendingUp size={800} className="absolute -bottom-48 -right-48" />
+        </div>
+        <div className="max-w-7xl mx-auto px-4 relative z-10">
+           <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div className="relative group">
+                 <div className="absolute -inset-4 bg-white/10 rounded-[3rem] blur-2xl group-hover:bg-white/20 transition-all"></div>
+                 <img src={highlightedAlumnus.image} alt={highlightedAlumnus.name} className="relative rounded-[3rem] w-full aspect-square object-cover shadow-2xl grayscale hover:grayscale-0 transition-all duration-700" />
+                 <div className="absolute bottom-8 right-8 bg-white text-blue-600 px-6 py-4 rounded-2xl shadow-xl">
+                    <div className="text-xs font-black uppercase tracking-widest mb-1">Impact Result</div>
+                    <div className="text-2xl font-black font-display tracking-tighter">{highlightedAlumnus.achievement}</div>
+                 </div>
+              </div>
+              <div className="space-y-8">
+                 <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 px-4 py-2 rounded-full text-xs font-black uppercase tracking-widest">
+                    <Sparkles size={14} className="text-yellow-400" /> Spotlight: Elite Alumni
+                 </div>
+                 <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none font-display">
+                    Architecting <br />The Leap.
+                 </h2>
+                 <p className="text-xl md:text-2xl font-medium leading-relaxed text-blue-50 italic">
+                    "{highlightedAlumnus.story}"
+                 </p>
+                 <div className="pt-4">
+                    <div className="text-2xl font-black font-display uppercase tracking-tight">{highlightedAlumnus.name}</div>
+                    <div className="text-blue-200 font-bold uppercase tracking-widest text-xs">{highlightedAlumnus.role}</div>
+                 </div>
+              </div>
+           </div>
+        </div>
+      </section>
+
+      {/* Alumni Hall of Fame (Testimonials Section) */}
+      <section className="py-24 max-w-7xl mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white uppercase tracking-tighter mb-4 font-display text-center">Alumni Hall of Fame</h2>
+          <p className="text-slate-500 dark:text-slate-400 text-lg max-w-2xl mx-auto font-medium text-center">
+            Hear from the graduates who are already dominating the AI adoption curve.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {testimonials.map((t, i) => (
+            <div key={i} className="bg-slate-50 dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-blue-500/5 relative">
+              <Quote className="absolute top-6 right-8 text-blue-600/10" size={60} />
+              <div className="flex gap-1 mb-6">
+                {[...Array(5)].map((_, i) => <Star key={i} size={14} className="fill-blue-600 text-blue-600" />)}
+              </div>
+              <p className="text-slate-600 dark:text-slate-400 text-lg mb-8 leading-relaxed font-medium italic">
+                "{t.content}"
+              </p>
+              <div className="flex items-center gap-4">
+                <img src={t.avatar} className="w-12 h-12 rounded-full border-2 border-blue-600" alt={t.name} />
+                <div>
+                  <div className="text-slate-900 dark:text-white font-black text-sm">{t.name}</div>
+                  <div className="text-slate-500 font-bold uppercase text-[10px] tracking-widest">{t.role}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Meet the Architects (Team Section) */}
       <section className="py-24 bg-slate-50 dark:bg-slate-900/30">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white uppercase tracking-tighter mb-4 font-display">Meet the Architects</h2>
-            <p className="text-slate-500 dark:text-slate-400 text-lg max-w-2xl mx-auto font-medium">
+            <h2 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white uppercase tracking-tighter mb-4 font-display text-center">Meet the Architects</h2>
+            <p className="text-slate-500 dark:text-slate-400 text-lg max-w-2xl mx-auto font-medium text-center">
               Join a cohort led by world-class engineers who don't just teach—they deploy.
             </p>
           </div>
@@ -222,47 +300,11 @@ const Academy: React.FC<AcademyProps> = ({ user, onOpenAuth }) => {
         </div>
       </section>
 
-      {/* Alumni Hall of Fame (Testimonials Section) */}
-      <section className="py-24 max-w-7xl mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white uppercase tracking-tighter mb-4 font-display">Alumni Hall of Fame</h2>
-          <p className="text-slate-500 dark:text-slate-400 text-lg max-w-2xl mx-auto font-medium">
-            Hear from the graduates who are already dominating the AI adoption curve.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((t, i) => (
-            <div key={i} className="bg-slate-50 dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-blue-500/5 relative">
-              <Quote className="absolute top-6 right-8 text-blue-600/10" size={60} />
-              <div className="flex gap-1 mb-6">
-                {[...Array(5)].map((_, i) => <Star key={i} size={14} className="fill-blue-600 text-blue-600" />)}
-              </div>
-              <p className="text-slate-600 dark:text-slate-400 text-lg mb-8 leading-relaxed font-medium italic">
-                "{t.content}"
-              </p>
-              <div className="flex items-center gap-4">
-                <img src={t.avatar} className="w-12 h-12 rounded-full border-2 border-blue-600" alt={t.name} />
-                <div>
-                  <div className="text-slate-900 dark:text-white font-black text-sm">{t.name}</div>
-                  <div className="text-slate-500 font-bold uppercase text-[10px] tracking-widest">{t.role}</div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Normal Distribution Section */}
-      <section className="py-24">
-        <NormalDistribution />
-      </section>
-
       {/* Pricing Funnel */}
       <section className="py-24 max-w-7xl mx-auto px-4 text-center">
         <div className="bg-gradient-to-br from-blue-600 to-blue-800 p-16 md:p-32 rounded-[4rem] border border-blue-400 shadow-[0_40px_100px_-20px_rgba(37,99,235,0.4)] relative overflow-hidden">
-          <h2 className="text-5xl md:text-7xl font-black text-white mb-8 uppercase font-display">Ready to Lead?</h2>
-          <p className="text-xl text-blue-100 mb-12 max-w-2xl mx-auto font-medium">
+          <h2 className="text-5xl md:text-7xl font-black text-white mb-8 uppercase font-display text-center">Ready to Lead?</h2>
+          <p className="text-xl text-blue-100 mb-12 max-w-2xl mx-auto font-medium text-center">
             Applications for the <span className="bg-white text-blue-600 px-4 py-1.5 rounded-full font-black">{getNextCohort()} Cohort</span> are now open.
           </p>
           
