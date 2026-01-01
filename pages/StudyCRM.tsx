@@ -65,7 +65,7 @@ const StudyCRM: React.FC<StudyCRMProps> = ({ user }) => {
       {/* Sidebar - Course List */}
       <div className="w-80 border-r border-blue-900/20 h-[calc(100vh-80px)] overflow-y-auto bg-slate-950/50 backdrop-blur-xl sticky top-20">
         <div className="p-6">
-           <h2 className="text-xl font-black text-white italic uppercase tracking-wider mb-6">Course Modules</h2>
+           <h2 className="text-xl font-black text-white uppercase tracking-wider mb-6 font-display">Course Modules</h2>
            <div className="space-y-3">
               {courses.map(course => (
                 <button
@@ -109,7 +109,7 @@ const StudyCRM: React.FC<StudyCRMProps> = ({ user }) => {
                     <Trophy size={20} />
                  </div>
                  <div>
-                    <h3 className="text-white font-black text-lg italic uppercase">Student Progress</h3>
+                    <h3 className="text-white font-black text-lg uppercase font-display">Student Progress</h3>
                     <p className="text-slate-500 text-sm font-bold">20% Completed</p>
                  </div>
               </div>
@@ -124,7 +124,7 @@ const StudyCRM: React.FC<StudyCRMProps> = ({ user }) => {
                  <BookOpen size={16} />
                  Module {activeCourse.id} - {activeCourse.type}
               </div>
-              <h1 className="text-5xl font-black text-white italic tracking-tighter uppercase">{activeCourse.title}</h1>
+              <h1 className="text-5xl font-black text-white tracking-tighter uppercase font-display leading-tight">{activeCourse.title}</h1>
               
               {activeCourse.type === 'video' ? (
                 <div className="aspect-video bg-black rounded-[3rem] border border-blue-500/20 overflow-hidden shadow-2xl relative group">
@@ -138,7 +138,7 @@ const StudyCRM: React.FC<StudyCRMProps> = ({ user }) => {
               ) : (
                 <div className="bg-slate-900 p-10 rounded-[3rem] border border-blue-500/10 space-y-8 font-medium leading-relaxed text-slate-300">
                    <div className="prose prose-invert max-w-none">
-                      <p className="text-xl text-white italic mb-6">"{activeCourse.content}"</p>
+                      <p className="text-xl text-white mb-6 font-bold tracking-tight">"{activeCourse.content}"</p>
                       <div className="h-px bg-slate-800 my-8"></div>
                       <p className="whitespace-pre-wrap">{activeCourse.articleBody}</p>
                    </div>
